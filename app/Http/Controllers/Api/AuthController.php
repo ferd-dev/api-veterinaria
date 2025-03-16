@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Return_;
 
 class AuthController extends Controller
 {
@@ -31,12 +33,12 @@ class AuthController extends Controller
     /**
      * Obtener un JWT a través de las credenciales dadas.
      */
-    public function login(): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $request->only('email', 'password');
 
         if (! $token = Auth::attempt($credentials)) {
-            return $this->errorResponse(null, 'Unauthorized', 401);
+            return $this->errorResponse(null, 'No autorizado', 401);
         }
 
         return $this->respondWithToken($token);
