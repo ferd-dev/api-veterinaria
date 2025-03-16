@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use PhpParser\Node\Stmt\Return_;
 
 class AuthController extends Controller
@@ -49,6 +50,7 @@ class AuthController extends Controller
      */
     public function me(): JsonResponse
     {
+        Gate::authorize('create', User::class);
         return $this->successResponse(new UserResource(Auth::user()), 'Datos de usuario recuperados correctamente');
     }
 
