@@ -28,7 +28,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->can('publish articles')) {
+        if ($user->can('edit articles')) {
             return true;
         }
         return false;
