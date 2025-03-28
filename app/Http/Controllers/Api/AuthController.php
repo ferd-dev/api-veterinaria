@@ -19,6 +19,7 @@ class AuthController extends Controller
 
     /**
      * Registrar un usuario.
+     * @unauthenticated
      */
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -33,6 +34,7 @@ class AuthController extends Controller
 
     /**
      * Obtener un JWT a través de las credenciales dadas.
+     * @unauthenticated
      */
     public function login(LoginRequest $request): JsonResponse
     {
